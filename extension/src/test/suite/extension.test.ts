@@ -15,6 +15,7 @@ suite('Extension Test Suite', () => {
     '../../../src/test/mock/sample.component.html'
   );
   const activeFileName = 'toto';
+  const skipImport = false;
   let settings: Uri = Uri.file(activeFile);
 
   test('call showInputBox, createScript and exec when ComponizerCommand is invoked', async () => {
@@ -30,7 +31,7 @@ suite('Extension Test Suite', () => {
     expect(
       csSpy.withArgs(
         activeFileName,
-        activeFileName,
+        skipImport,
         activeFile,
         match.object,
         false

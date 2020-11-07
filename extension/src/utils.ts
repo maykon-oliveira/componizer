@@ -9,17 +9,21 @@ export async function showInputBox(): Promise<string> {
   return result || defaultComponentName;
 }
 
-export async function showInputBoxForSkipImport(): Promise<string> {
-  const result = await window.showInputBox({
-    value: '',
-    placeHolder: 'Allows for skipping the module import.',
-  });
-  return result || defaultSkipImport;
+export async function showInputBoxForSkipImport(): Promise<boolean> {
+  type Choices = 'Yes' | 'No';
+  const result = await window.showQuickPick(['No', 'Yes'], {
+    placeHolder: 'Allows for skipping the module import.', canPickMany: false, ignoreFocusOut: true
+  }) as Choices;
+  const mapToBoolean = {
+    'Yes': true,
+    'No': false
+  };
+  return mapToBoolean[result] || defaultSkipImport;
 }
 
 export function createScript(
   newComponent: string,
-  skipImport: string,
+  skipImport: boolean,
   activeFile: string,
   selection: Selection,
   debugMode: boolean
